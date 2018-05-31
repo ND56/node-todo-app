@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient
+const {MongoClient, ObjectID} = require('mongodb')
 
 MongoClient.connect('mongodb://127.0.0.1:27017/TodoApp', { useNewUrlParser: true }, (err, client) => {
   if (err) {
@@ -9,7 +9,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/TodoApp', { useNewUrlParser: true
   const db = client.db('TodoApp')
 
   db.collection('Todos').insertOne({
-    text: 'Something to do',
+    text: 'Yet another thing I need to do',
     completed: false
   }, (err, result) => {
     if (err) {
@@ -20,7 +20,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/TodoApp', { useNewUrlParser: true
   })
 
   db.collection('Users').insertOne({
-    name: 'Nick',
+    name: 'Kayla',
     age: 28,
     location: 'Medford, MA'
   }, (err, result) => {
@@ -29,6 +29,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/TodoApp', { useNewUrlParser: true
     }
 
     console.log(JSON.stringify(result.ops, undefined, 2))
+    console.log(result.ops[0]._id.getTimestamp())
   })
 
   client.close()
