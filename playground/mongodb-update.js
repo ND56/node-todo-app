@@ -8,20 +8,14 @@ MongoClient.connect('mongodb://127.0.0.1:27017/TodoApp', { useNewUrlParser: true
   console.log(`Connected to MongoDB server`)
   const db = client.db('TodoApp')
 
-  // takes multiple arguments:
-  // findOneAndUpdate(filter, update, options, callback)
-  // can leave off callback in favor of promises, which we've been doing
   db.collection('Todos').findOneAndUpdate({
-    _id: new ObjectID('5b1147aba5eb8a80610ed420') // (1) Filter
+    _id: new ObjectID('5b1147aba5eb8a80610ed420')
   }, {
-    // (2) update information using MongoDB update operators
-    // google mongodb update operators -> works with node.js driver
     $set: {
       completed: true
     }
   }, {
-    // (3) options object
-    returnOriginal: false // we want to return the new one, not the original
+    returnOriginal: false
   }).then((doc) => {
     console.log(doc)
   })
@@ -35,5 +29,5 @@ MongoClient.connect('mongodb://127.0.0.1:27017/TodoApp', { useNewUrlParser: true
     returnOriginal: false
   }).then(doc => console.log(doc))
 
-  // client.close()
+  client.close()
 })
